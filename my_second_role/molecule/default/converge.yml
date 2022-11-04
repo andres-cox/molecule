@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include acme2.my_second_role"
+      include_role:
+        name: "acme2.my_second_role"

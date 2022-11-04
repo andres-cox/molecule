@@ -1,0 +1,14 @@
+# - name: Import db-load-script
+#   debugger: on_failed
+#   mysql_db:
+#     name: ecomdb
+#     state: import
+#     target: /tmp/db-load-script.sql
+#   run_once: true
+#   become: true
+
+- name: Reload Firewall
+  systemd:
+    name: firewalld
+    state: reloaded
+  become: true
