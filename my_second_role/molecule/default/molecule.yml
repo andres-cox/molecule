@@ -13,11 +13,6 @@ platforms:
     memory: 2048
     cpus: 2
     interfaces:
-      # `network_name` is the required identifier, all other keys map to
-      # arguments.
-      - auto_config: true
-        network_name: private_network
-        type: dhcp
       - network_name: private_network
         ip: 192.168.56.14
       - network_name: forwarded_port
@@ -27,3 +22,6 @@ provisioner:
   name: ansible
 verifier:
   name: inspec
+lint: |
+  yamllint ./tasks
+  ansible-lint ./tasks

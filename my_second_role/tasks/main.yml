@@ -32,7 +32,8 @@
   become: yes
   register: cmd_firefalld
 
-- debug:
+- name: Show firewall rules
+  debug:
     var: cmd_firefalld.stdout_lines
 
 
@@ -57,13 +58,14 @@
   become: true
 
 - name: Copy sql script
+  become: true
   copy:
-    src: /home/andres/Documents/molecule/my_second_role/files/db-load-script.sql
+    src: /home/acox/Documents/molecule/my_second_role/files/db-load-script.sql
     dest: /tmp/db-load-script.sql
     owner: root
     group: root
     mode: 0664
-  become: true
+    remote_src: false
   register: sql
 
 - name: Import db-load-script
@@ -82,7 +84,8 @@
   register: query
   become: true
 
-- debug:
+- name: Show query results
+  debug:
     var: query.query_result
 
 - name: Install Web packages
@@ -110,7 +113,8 @@
   become: yes
   register: cmd_firefalld
 
-- debug:
+- name: List Firewalld 
+  debug:
     var: cmd_firefalld.stdout_lines
 
 - name: Modify httpd.conf
@@ -132,6 +136,12 @@
   service:
     name: httpd
     state: reloaded
+  become: true
+
+- name: Install Git
+  yum:
+    name: git
+    state: present
   become: true
 
 - name: Download repo from git
